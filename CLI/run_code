@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+source ~/myenv/bin/activate
+
+PROJECTPATH="/home/pedro/Documents/PaloVerde/Project"
+TABLENAME='prod_leche_tot'
+
+data_insertion() {
+    echo "Running Python...";
+    python3 "../Data_insertion/data_insertion_function.py" ${PROJECTPATH} ${TABLENAME} # ${operation} ${CASEPATH} ${ROOM} ${DICTIONARYPATH} > ${LOGSPATH}/log.${operation} 2>&1
+}
+
+
+data_insertion

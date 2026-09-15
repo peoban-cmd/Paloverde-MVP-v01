@@ -1,0 +1,98 @@
+// High level software architecture
+digraph DatabasePostProc {
+	compound=true
+	// Define formats
+	node [color=blue fontname="Helvetica,Arial,sans-serif" shape=box] //component]
+	
+	GUI [
+		label="GUI"
+	]
+	
+	CLI [
+		label="CLI"
+	]
+		
+	Database [
+		label="Database"
+	]
+
+	Results [
+		label="Results"
+	]
+
+	// Module to add information to the database
+	DataInsertion [
+		label=< Data insertion <br />>
+	]
+
+	DataInsertionInterface [label="Data insertion interface <I>"]
+	
+	// Query the database and generate analytics (images or data)
+	DataAnalytics [
+		label=<Data analytics <br/>
+		Access to predefined analysis functions
+		>
+	]
+	
+	DataAccessInterface [
+		label="Data access interface <I>"
+	]
+	
+	// Display the analytics in the GUI
+	Visualization [
+		label="Visualization"
+	]
+	
+	// Automated report generation
+	Report [
+		label="Report"
+	]
+		
+	// ************************************* Flows section *************************************
+	
+	{
+        rank=same;
+        GUI;
+        CLI;
+        Database;
+        Results;
+    }
+	
+	GUI -> DataInsertion
+	CLI -> DataInsertion
+	
+	DataInsertion -> DataInsertionInterface	
+	DataInsertionInterface -> Database
+
+	GUI -> DataAnalytics
+	CLI -> DataAnalytics
+	
+	DataAnalytics -> DataAccessInterface
+	DataAccessInterface -> Database
+	DataAccessInterface -> Results	
+		
+	GUI -> Report
+	CLI -> Report
+	
+	GUI -> Visualization
+	
+	
+	//DataAnalytics -> Database 
+
+/*GUI -> FunctionInterfacePython[lhead=clusterFunctionInterfacePostProc] 
+
+FunctionInterfacePython -> GenerateFigure //[style=invis]
+
+//DIP
+//GenerateFigure -> FunctionInterfacePython [constraint=false][lhead=clusterFunctionInterfacePostProc]
+
+GenerateFigure -> InputInterface
+
+InputInterface -> InputDictionary //[style=invis]
+InputInterface -> OperativeConditions //[style=invis]
+
+// DIP
+//InputDictionary -> InputInterface [constraint=false]
+//OperativeConditions -> InputInterface [constraint=false]
+*/
+}

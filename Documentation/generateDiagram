@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Script that reads a graphviz DOT source file and outputs a png
+
+FILENAME='HL_overview' #'Post_processing'
+
+echo "Generating the diagram: '${FILENAME}'"
+ 
+dot -Tpng ${FILENAME}.gv -o ${FILENAME}.png

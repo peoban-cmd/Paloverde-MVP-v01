@@ -1,0 +1,7 @@
+Procedure to create the weekly report:
+
+1. Run 'createWeeklyReport': bash script that calls
+- WeeklyImages.py : script that reads the database and creates the figures. Based on the abstract class
+- WeeklyReport.py : script that creates the pdf document, inserting the above created images
+
+

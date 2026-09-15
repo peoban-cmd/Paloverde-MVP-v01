@@ -1,0 +1,75 @@
+// Post-processing structure
+digraph DatabasePostProc {
+	compound=true
+	// Define formats
+	node [color=blue fontname="Helvetica,Arial,sans-serif" shape=box] //component]
+	
+	LaunchOperation [label="Launch operation"]
+	
+	// Abstract classes for DIP
+	subgraph clusterFunctionInterfacePostProc {		
+	color=black	
+	shape=component
+	label="Function interface <I>"
+	
+	FunctionInterfacePython [
+	label=<<B>Python function</B><br /><br />
+	Inputs: <br align="left" />
+	1. Name of the operation <br align="left" />
+	2. Date  <br align="left" />
+	<br />
+	Operations: <br align="left" />
+	1. Process data <br align="left" />
+	2. Export results <br align="left" />
+	<br />
+	>]
+
+	}
+	
+	InputInterface [label="Input interface <I>"]
+	
+	// Generate figure 
+	GenerateFigure [
+	label=<<B>Generate performance plot </B><br /><br />
+	Inputs: <br align="left" />
+	1. Performance variable  <br align="left" />
+	2. Time span  <br align="left" />
+	<br />
+	Operations: <br align="left" />
+	1. Perform the query <br align="left" />
+	2. Generate the figure <br align="left" />
+	<br />
+	Outputs: <br align="left" />
+	1. Figure with time evolution of the performance variable  <br align="left" />
+	<br />
+	>]
+	
+	InputDictionary [
+	label=<<B>Input dictionary</B><br /><br />
+	- List with HVAC elements <br align="left" />
+	>]
+	
+	OperativeConditions [
+	label=<<B>Operative conditions</B><br /><br />
+	- Flow rate per element
+	>]
+	
+// ************************************* Flows section *************************************
+
+LaunchOperation -> FunctionInterfacePython[lhead=clusterFunctionInterfacePostProc] 
+
+FunctionInterfacePython -> GenerateFigure //[style=invis]
+
+//DIP
+//GenerateFigure -> FunctionInterfacePython [constraint=false][lhead=clusterFunctionInterfacePostProc]
+
+GenerateFigure -> InputInterface
+
+InputInterface -> InputDictionary //[style=invis]
+InputInterface -> OperativeConditions //[style=invis]
+
+// DIP
+//InputDictionary -> InputInterface [constraint=false]
+//OperativeConditions -> InputInterface [constraint=false]
+
+}
