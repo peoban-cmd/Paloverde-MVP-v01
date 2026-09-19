@@ -28,12 +28,15 @@ class AbstractPythonClass(ABC):
             keys = inputs.keys()
             # Insert
             str1 = f'INSERT INTO {self.table_name} ('
+            str3 = ''
             for count, key in enumerate(keys):
                 str1 += key
+                str3 += '%s'
                 if count != len(keys) - 1:
                     str1 += ','
-            str2 = ') VALUES (%s, %s, %s);'
-            query = str1 + str2
+                    str3 += ','
+            str2 = ') VALUES ('
+            query = str1 + str2 + str3 + ');'
 
             self.cur.execute(
                 query,

@@ -3,11 +3,19 @@ source ~/myenv/bin/activate
 
 PROJECTPATH="/home/pedro/Documents/PaloVerde/Project"
 TABLENAME='prod_leche_tot'
+FUNCTIONNAME='milk_production'
 
 data_insertion() {
     echo "Running Python...";
     python3 "../Data_insertion/data_insertion_function.py" ${PROJECTPATH} ${TABLENAME} # ${operation} ${CASEPATH} ${ROOM} ${DICTIONARYPATH} > ${LOGSPATH}/log.${operation} 2>&1
 }
 
+data_analytics() {
+    echo "Running Python...";
+    python3 "../Data_analytics/data_analytics_function.py" ${PROJECTPATH} ${FUNCTIONNAME} # ${operation} ${CASEPATH} ${ROOM} ${DICTIONARYPATH} > ${LOGSPATH}/log.${operation} 2>&1
+}
 
-data_insertion
+
+#data_insertion
+data_analytics
+

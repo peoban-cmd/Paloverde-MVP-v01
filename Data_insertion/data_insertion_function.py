@@ -1,7 +1,7 @@
 import sys, re
 from pathlib import Path
 
-debug = True
+debug = False
 if debug:
     project_path = "/home/pedro/Documents/PaloVerde/Project"
     table_name = 'prod_leche_tot'
@@ -13,7 +13,7 @@ else:
 from prod_leche_tot import ProdLecheTot
 implementations = {"prod_leche_tot": ProdLecheTot}
 
-software_path = re.sub('Python.*', 'Python',str(Path(__file__).resolve().parent))
+software_path = re.sub('MVP-v01.*', 'MVP-v01',str(Path(__file__).resolve().parent))
 shared_functions_path = f'{software_path}/Shared_functions'
 append_paths = [shared_functions_path, project_path + '/Configuration']
 for i in append_paths:

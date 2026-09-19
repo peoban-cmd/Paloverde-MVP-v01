@@ -9,16 +9,20 @@ To add a new functionality or implementation:
 import sys, re, os
 from pathlib import Path
 
-# Inputs
-project_path = "/home/pedro/Documents/PaloVerde/Project"
-function_name='milk_production'
+debug = False
+if debug:
+    project_path = "/home/pedro/Documents/PaloVerde/Project"
+    function_name='milk_production'
+else:
+    project_path = sys.argv[1]
+    function_name = sys.argv[2]
 
 # Implemented functions
 from milk_production import MilkProduction
 implementations = {"milk_production": MilkProduction}
 
 
-software_path = re.sub('Python.*', 'Python',str(Path(__file__).resolve().parent))
+software_path = re.sub('MVP-v01.*', 'MVP-v01',str(Path(__file__).resolve().parent))
 shared_functions_path = f'{software_path}/Shared_functions'
 append_paths = [shared_functions_path, project_path + '/Configuration']
 for i in append_paths:
