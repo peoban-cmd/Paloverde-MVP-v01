@@ -15,7 +15,13 @@ data_analytics() {
     python3 "../Data_analytics/data_analytics_function.py" ${PROJECTPATH} ${FUNCTIONNAME} # ${operation} ${CASEPATH} ${ROOM} ${DICTIONARYPATH} > ${LOGSPATH}/log.${operation} 2>&1
 }
 
+weekly_report() {
+    echo "Running Python...";
+    python3 "../Weekly_report/weekly_report.py" ${PROJECTPATH}
+}
+
 
 #data_insertion
-data_analytics
+#data_analytics
+weekly_report
 

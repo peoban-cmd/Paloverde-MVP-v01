@@ -53,8 +53,9 @@ class MilkProduction(AbstractPythonClass):
         date = pd.to_datetime(self.df['fecha'])
         self.date = date.dt.strftime('%d-%b')
         # Plots
-        self.plot_milk_production()
-        # self.plot_function('leche_litros','Total de leche (L)','ProduccionTotalLeche')
+        # self.plot_milk_production()
+        self.plot_function('leche_litros','Producción total de leche (L)','ProduccionTotalLeche')
+        self.plot_function('queso_litros', 'Leche para queso (L)', 'LecheQueso')
         self.plot_function('numero_vacas', 'Número de vacas ordeñadas', 'VacasOrdenadas')
         self.plot_function('leche_por_vaca','Promedio de leche por vaca (L)','PromedioLechePorVaca')
         print(f'Data exported for "{self.case_config.function_name}"')
