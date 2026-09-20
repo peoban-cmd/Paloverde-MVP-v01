@@ -22,6 +22,6 @@ weekly_report() {
 
 
 #data_insertion
-#data_analytics
+data_analytics
 weekly_report
 

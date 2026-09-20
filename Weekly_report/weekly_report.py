@@ -1,15 +1,17 @@
 import re, sys
+import pandas as pd
 from pathlib import Path
 from datetime import date
 
-import numpy as np
 
+import numpy as np
+from pylatex import Table, Tabular, MultiColumn
 from pylatex import Document, Section, Subsection, Command, Package # Tabular, NewPage
 from pylatex import Math, TikZ, Axis, Plot, Figure, SubFigure, NoEscape, Matrix, Alignat
 from pylatex.utils import italic
 import os
 
-debug = False
+debug = True
 if debug:
     project_path = Path("/home/pedro/Documents/PaloVerde/Project")
 else:
@@ -70,6 +72,35 @@ if __name__ == '__main__':
 			# main_figure.add_caption(f'{figureName["caption"]}')
 
 		doc.append(Command('newpage'))
+		# Add table
+
+		# 1. Create a sample Pandas DataFrame
+		df = pd.DataFrame({
+			"ID": [101, 102, 103],
+			"Product": ["Widget A", "Widget B", "Widget C"],
+			"Price ($)": [29.99, 49.50, 15.00]
+		})
+
+
+		with doc.create(Section("Pandas to PyLaTeX")):
+			with doc.create(Table(position="h!")) as table:
+				table.add_caption("Data Populated from Pandas DataFrame")
+
+				# Define tabular alignment matching number of columns (3 columns)
+				with doc.create(Tabular("|c|l|c|")) as tabular:
+					tabular.add_hline()
+
+					# Add column names as the header row
+					tabular.add_row(list(df.columns))
+					tabular.add_hline()
+					tabular.add_hline()
+
+					# Fill table row-by-row directly from DataFrame values
+					for row in df.itertuples(index=False):
+						tabular.add_row(list(row))
+						tabular.add_hline()
+
+
 	# with doc.create(Section(f'Thermal stress distribution for {locationName}')):
 	# 	figure2 = {'name': 'thermal_stress_distributionCopernicus','path':'[8,20]', 'caption': 'Thermal stress distribution from '}
 	# 	figure3 = {'name': 'thermal_stress_distributionCopernicus', 'path': '[0,23]','caption': 'Thermal stress distribution from '}

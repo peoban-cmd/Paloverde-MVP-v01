@@ -9,7 +9,7 @@ To add a new functionality or implementation:
 import sys, re, os
 from pathlib import Path
 
-debug = False
+debug = True
 if debug:
     project_path = "/home/pedro/Documents/PaloVerde/Project"
     function_name='milk_production'
