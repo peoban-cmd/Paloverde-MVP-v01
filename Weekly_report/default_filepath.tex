@@ -1,0 +1,79 @@
+\documentclass{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{geometry}%
+\geometry{tmargin=1cm,bmargin=2cm,lmargin=2cm,landscape=True}%
+\usepackage{caption}%
+\usepackage{subcaption}%
+\usepackage{graphicx}%
+\usepackage{ragged2e}%
+%
+%
+%
+\begin{document}%
+
+
+\begin{figure}[!htb]%
+\begin{subfigure}{0.5\linewidth}%
+\includegraphics[width=\linewidth]{/home/pedro/Documents/PaloVerde/Project/Results/milk_production/ProduccionTotalLeche}%
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}%
+\includegraphics[width=\linewidth]{/home/pedro/Documents/PaloVerde/Project/Results/milk_production/LecheQueso}%
+\end{subfigure}%
+\end{figure}
+
+%
+
+
+\begin{figure}[!htb]%
+\begin{subfigure}{0.5\linewidth}%
+\includegraphics[width=\linewidth]{/home/pedro/Documents/PaloVerde/Project/Results/milk_production/PromedioLechePorVaca}%
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}%
+\includegraphics[width=\linewidth]{/home/pedro/Documents/PaloVerde/Project/Results/milk_production/VacasOrdenadas}%
+\end{subfigure}%
+\end{figure}
+
+%
+\newpage%
+
+
+\begin{table}[h!]%
+\begin{minipage}{0.48\textwidth}%
+\centering%
+\begin{tabular}{|c |c |c |c |}%
+\hline%
+Categoría&Promedio&Max&Min\\%
+\hline%
+Una semana&98.6&103.0&95.0\\%
+\hline%
+Dos semanas&98.6&105.0&95.0\\%
+\hline%
+Totalidad datos&101.7&120.0&95.0\\%
+\hline%
+\end{tabular}%
+\captionof{table}{leche litros}%
+\end{minipage}%
+\hfill%
+\begin{minipage}{0.48\textwidth}%
+\centering%
+\begin{tabular}{|c |c |c |c |}%
+\hline%
+Categoría&Promedio&Max&Min\\%
+\hline%
+Una semana&6.16&6.44&5.94\\%
+\hline%
+Dos semanas&6.16&6.56&5.94\\%
+\hline%
+Totalidad datos&6.28&7.06&5.94\\%
+\hline%
+\end{tabular}%
+\captionof{table}{leche por vaca}%
+\end{minipage}%
+\end{table}
+
+%
+\end{document}

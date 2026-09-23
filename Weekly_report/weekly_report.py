@@ -5,11 +5,50 @@ from datetime import date
 
 
 import numpy as np
-from pylatex import Table, Tabular, MultiColumn
-from pylatex import Document, Section, Subsection, Command, Package # Tabular, NewPage
+from pylatex import Document, Section, Subsection, Command, Package # NewPage
 from pylatex import Math, TikZ, Axis, Plot, Figure, SubFigure, NoEscape, Matrix, Alignat
+from pylatex import Table, Tabular, MiniPage
+# from pylatex.utils import NoEscape
+
 from pylatex.utils import italic
 import os
+
+def create_table(var_name):
+	with doc.create(Table(position="h!")) as table:
+		table.add_caption(f'Table {re.sub("_"," ",var_name)}')
+		df = pd.read_csv(f'{project_path}/Results/milk_production/{var_name}.csv')
+		table_cols = "|"
+		for i in range(df.shape[1]):
+			table_cols += "c |"
+		with doc.create(Tabular(table_cols)) as tabular:
+			tabular.add_hline()
+			# Add column names as the header row
+			tabular.add_row(list(df.columns))
+			tabular.add_hline()
+			# Fill table row-by-row directly from DataFrame values
+			for row in df.itertuples(index=False):
+				tabular.add_row(list(row))
+				tabular.add_hline()
+
+def create_tabular(mini_page):
+	df = pd.read_csv(f'{project_path}/Results/milk_production/{var_name}.csv')
+	table_cols = "|"
+	for i in range(df.shape[1]):
+		table_cols += "c |"
+
+	with mini_page.create(Tabular(table_cols)) as tabular:
+		tabular.add_hline()
+		# Add column names as the header row
+		tabular.add_row(list(df.columns))
+		tabular.add_hline()
+		# Fill table row-by-row directly from DataFrame values
+		for row in df.itertuples(index=False):
+			tabular.add_row(list(row))
+			tabular.add_hline()
+	caption_str = re.sub("_"," ",var_name)
+	mini_page.append(NoEscape(fr"\captionof{{table}}{{{caption_str}}}"))
+
+	return
 
 debug = True
 if debug:
@@ -28,6 +67,7 @@ if __name__ == '__main__':
 
 	geometry_options = {"tmargin": "1cm","bmargin": "2cm", "lmargin": "2cm","landscape":True}
 	doc = Document(geometry_options=geometry_options)
+	doc.packages.append(Package("caption"))
 	# doc.packages.append(Package('hyperref'))
 	# doc.preamble.append(NoEscape(r'''
 	# \hypersetup{
@@ -72,33 +112,34 @@ if __name__ == '__main__':
 			# main_figure.add_caption(f'{figureName["caption"]}')
 
 		doc.append(Command('newpage'))
-		# Add table
 
-		# 1. Create a sample Pandas DataFrame
-		df = pd.DataFrame({
-			"ID": [101, 102, 103],
-			"Product": ["Widget A", "Widget B", "Widget C"],
-			"Price ($)": [29.99, 49.50, 15.00]
-		})
+		with doc.create(Table(position="h!")) as outer_table:
+			# --- Left Column / Table ---
+			with doc.create(MiniPage(width=NoEscape(r"0.48\textwidth"))) as left_page:
+				left_page.append(NoEscape(r"\centering"))
+				var_name = 'leche_litros'
+				create_tabular(left_page)
+
+			# Horizontal spacing between the two columns
+			outer_table.append(NoEscape(r"\hfill"))
+
+			# --- Right Column / Table ---
+			with doc.create(MiniPage(width=NoEscape(r"0.48\textwidth"))) as right_page:
+				right_page.append(NoEscape(r"\centering"))
+				var_name = 'leche_por_vaca'
+				create_tabular(right_page)
 
 
-		with doc.create(Section("Pandas to PyLaTeX")):
-			with doc.create(Table(position="h!")) as table:
-				table.add_caption("Data Populated from Pandas DataFrame")
+					# right_page.add_caption("Table B")
 
-				# Define tabular alignment matching number of columns (3 columns)
-				with doc.create(Tabular("|c|l|c|")) as tabular:
-					tabular.add_hline()
+		# doc.generate_pdf(clean_tex=False)
 
-					# Add column names as the header row
-					tabular.add_row(list(df.columns))
-					tabular.add_hline()
-					tabular.add_hline()
-
-					# Fill table row-by-row directly from DataFrame values
-					for row in df.itertuples(index=False):
-						tabular.add_row(list(row))
-						tabular.add_hline()
+		# with doc.create(Section("Pandas to PyLaTeX")):
+		# 	var_name = 'leche_litros'
+		# 	create_table(var_name)
+		#
+		# 	var_name = 'leche_por_vaca'
+		# 	create_table(var_name)
 
 
 	# with doc.create(Section(f'Thermal stress distribution for {locationName}')):

@@ -1,4 +1,6 @@
 import math, re, ast, sys, os, subprocess
+from unicodedata import decimal
+
 import numpy as np
 from pathlib import Path
 import pandas as pd
@@ -14,7 +16,8 @@ for i in append_paths:
 from data_analytics_abstract_class import AbstractPythonClass
 
 class MilkProduction(AbstractPythonClass):
-    def create_table(self,y_var):
+    def create_table(self,y_var,decimals):
+        print(f'Create table {y_var}')
         one_week = {'label':'Una semana','week_delta':1}
         two_weeks = {'label': 'Dos semanas', 'week_delta': 2}
         all = {'label': 'Totalidad datos', 'week_delta': 1e3}
@@ -25,9 +28,9 @@ class MilkProduction(AbstractPythonClass):
             lim_date = pd.to_datetime(date.today()-timedelta(weeks=category['week_delta']))
             df_subset = self.df[self.df['fecha']>=lim_date]
             data[counter,0] = category.get('label')
-            data[counter,1] = df_subset[y_var].mean()
-            data[counter,2] = df_subset[y_var].max()
-            data[counter,3] = df_subset[y_var].min()
+            data[counter,1] = df_subset[y_var].mean().round(decimals)
+            data[counter,2] = df_subset[y_var].max().round(decimals)
+            data[counter,3] = df_subset[y_var].min().round(decimals)
         output = pd.DataFrame(data,columns=columns)
         output.to_csv(f'{self.results_path}/{y_var}.csv',index=False)
         print(output)
@@ -81,8 +84,8 @@ class MilkProduction(AbstractPythonClass):
         self.df['leche_por_vaca'] = self.df['leche_litros'] / self.df['numero_vacas']
         # Plots
         # self.plot_milk_production()
-        self.create_table('leche_litros')
-        self.create_table('leche_por_vaca')
+        self.create_table('leche_litros',decimals=1)
+        self.create_table('leche_por_vaca',decimals=2)
         self.plot_function('leche_litros','Producción total de leche (L)','ProduccionTotalLeche')
         self.plot_function('queso_litros', 'Leche para queso (L)', 'LecheQueso')
         self.plot_function('numero_vacas', 'Número de vacas ordeñadas', 'VacasOrdenadas')
